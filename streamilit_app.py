@@ -2,15 +2,18 @@ import streamlit as st
 from supabase import create_client, Client
 from datetime import datetime
 
+# 🏷️ VERIFICAÇÃO HILLTOP ADS — NÃO ALTERE!
+st.markdown(
+    '''
+    <meta name="a5b1d9fb1ed50e801ace13717f7d81378487f58e" content="a5b1d9fb1ed50e801ace13717f7d81378487f58e" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    ''',
+    unsafe_allow_html=True
+)
+
 # ⚙️ Carrega as chaves das Secrets do Streamlit
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_CHAVE = st.secrets["SUPABASE_CHAVE"]
-
-# 🏷️ VERIFICAÇÃO HILLTOP ADS
-st.markdown(
-    '<meta name="a5b1d9fb1ed50e801ace13717f7d81378487f58e" content="a5b1d9fb1ed50e801ace13717f7d81378487f58e" />',
-    unsafe_allow_html=True
-)
 
 # 🔌 Conectar com o Supabase
 try:
@@ -54,7 +57,7 @@ def sair():
     st.session_state.usuario = None
     st.rerun()
 
-# 📊 Carregar dados do usuário — sem mensagem de aviso!
+# 📊 Carregar dados do usuário
 def carregar_dados_usuario():
     user_id = st.session_state.usuario.id
     hoje = datetime.now().strftime("%Y-%m-%d")
@@ -63,7 +66,6 @@ def carregar_dados_usuario():
         resposta = supabase.table('usuarios').select('*').eq('id', user_id).single().execute()
         dados = resposta.data
         
-        # Reset diário de cliques
         if dados.get('ultimo_dia') != hoje:
             supabase.table('usuarios').update({
                 'cliques_hoje': 0,
@@ -74,7 +76,6 @@ def carregar_dados_usuario():
             
         return dados
     except Exception:
-        # Retorna dados padrão silenciosamente
         return {
             'saldo': 0.00,
             'cliques_hoje': 0,
@@ -211,4 +212,4 @@ else:
     
     st.divider()
     st.caption("© 2026 Clique e Ganhe | Todos os direitos reservados 💚")
-        
+    
