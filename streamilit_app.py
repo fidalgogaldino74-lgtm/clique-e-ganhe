@@ -6,6 +6,12 @@ from datetime import datetime
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_CHAVE = st.secrets["SUPABASE_CHAVE"]
 
+# 🏷️ VERIFICAÇÃO HILLTOP ADS
+st.markdown(
+    '<meta name="a5b1d9fb1ed50e801ace13717f7d81378487f58e" content="a5b1d9fb1ed50e801ace13717f7d81378487f58e" />',
+    unsafe_allow_html=True
+)
+
 # 🔌 Conectar com o Supabase
 try:
     supabase: Client = create_client(SUPABASE_URL, SUPABASE_CHAVE)
@@ -205,3 +211,4 @@ else:
     
     st.divider()
     st.caption("© 2026 Clique e Ganhe | Todos os direitos reservados 💚")
+        
